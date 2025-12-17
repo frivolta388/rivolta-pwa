@@ -3,26 +3,19 @@ workflows:
     name: iOS Capacitor Build
     max_build_duration: 60
     environment:
-      node: 22
+      node: 20
       xcode: latest
+
     scripts:
       - name: Install dependencies
         script: |
-          npm install
+          npm ci
+
       - name: Build web
         script: |
           npm run build
-     - name: Add & Sync Capacitor iOS
-  script: |
-    npx cap add ios || true
-    npx cap sync ios
-      - name: Build iOS
+
+      - name: Add & Sync Capacitor iOS
         script: |
-          xcodebuild \
-            -workspace ios/App/App.xcworkspace \
-            -scheme App \
-            -sdk iphoneos \
-            -configuration Release \
-            clean build
-    artifacts:
-      - build/ios/ipa/*.ipa
+          npx cap add ios || true
+          npx cap sync ios
